@@ -23,7 +23,20 @@ Ce projet vise à gérer efficacement les donneurs de sang, les stocks de sang, 
 ### Frontend :
 - Angular 8 (dans un dossier séparé, non inclus ici)
 
----
+## 📁 Structure du projet
+src/
+├── main/
+│   ├── java/
+│   │   └── com.application.bloodbankmanagement/
+│   │       ├── controller/       # Gère les requêtes HTTP
+│   │       ├── model/            # Contient les entités JPA (classes de base de données)
+│   │       ├── repository/       # Interfaces JPA pour accéder aux données
+│   │       ├── security/         # Configuration de la sécurité (JWT, filtres, etc.)
+│   │       └── service/          # Logique métier
+│   └── resources/
+│       ├── application.properties # Configuration de l'application
+│       └── static/                # Contenu statique (si utilisé)
+└── test/                          # Tests unitaires et d’intégration
 
 ## ⚙️ Configuration du Backend
 
