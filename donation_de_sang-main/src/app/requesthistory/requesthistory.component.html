@@ -1,0 +1,83 @@
+<div class="sidebar-logo">
+  <div class="welcometxt" style="float: left;"><b style="color: white;">Tableau de bord {{loggedUser === 'admin@gmail.com' ? 'Administrateur' : 'Utilisateur'}}</b></div>
+  <button class="logoutbtn" (click)="navigateHome()"><i class="fa fa-home"></i> Accueil</button>
+  <b class="sidebar-text" style="color: whitesmoke;"><i class="fa fa-user"></i> Bienvenue {{loggedUser}}</b>
+  <button class="logoutbtn" (click)="logout()"><i class="fa fa-sign-out"></i> Déconnexion</button>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 style="text-align: center; font-family: 'Oswald', sans-serif;color: maroon; margin-top: 3%; margin-bottom: 3%;">Historique des demandes de sang</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Nom du patient</th>
+          <th>Numéro de téléphone</th>
+          <th>Genre</th>
+          <th>Groupe sanguin</th>
+          <th>Âge</th>
+          <th>Maladie</th>
+          <th>Unités demandées</th>
+          <th>État de la demande</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let history of requests | async">
+          <td>
+            <img *ngIf="history.gender === 'Homme' || history.gender === 'homme'" class="bloodimg" [src]="'assets/img/male.png'" width="80" height="80">
+            <img *ngIf="history.gender === 'Femme' || history.gender === 'femme'" class="bloodimg" [src]="'assets/img/female.png'" width="80" height="80">
+          </td>
+          <td>{{history.name}}</td>
+          <td>{{history.mobile}}</td>
+          <td>{{history.gender}}</td>
+          <td style="color: red; font-size: 25px;">{{history.bloodgroup}}</td>
+          <td>{{history.age}} ans</td>
+          <td style="color: navy;">{{history.disease}}</td>
+          <td>{{history.units}} unités</td>
+          <td>
+            <!-- Section administrateur -->
+            <div *ngIf="loggedUser === 'admin@gmail.com' && history.status === 'false'">
+              <button (click)="acceptRequest(history.email)" id="acceptbtn" value="history.email" style="margin-bottom: 5px;" class="accepted">
+                Accepter la demande
+              </button>
+              <button (click)="rejectRequest(history.email)" id="rejectbtn" value="history.email" class="rejected">
+                Refuser la demande
+              </button>
+              <div id="acceptedbtn" class="accepted" style="display: none;">Demande acceptée</div>
+              <div id="rejectedbtn" class="rejected" style="display: none;">Demande refusée</div>
+            </div>
+
+            <!-- Réponses aux demandes -->
+            <div *ngFor="let details of responses | async">
+              <div *ngIf="details === 'accept' && loggedUser !== 'admin@gmail.com'" class="accepted">
+                Demande acceptée
+              </div>
+              <div *ngIf="details === 'false' && loggedUser !== 'admin@gmail.com'" class="pending">
+                En cours de traitement
+              </div>
+              <div *ngIf="details === 'reject' && loggedUser !== 'admin@gmail.com'" class="rejected">
+                Demande refusée
+              </div>
+            </div>
+
+            <!-- Statut final pour l'administrateur -->
+            <div *ngIf="loggedUser === 'admin@gmail.com' && history.status === 'accept'">
+              <div class="accepted">Demande acceptée</div>
+            </div>
+            <div *ngIf="loggedUser === 'admin@gmail.com' && history.status === 'reject'">
+              <div class="rejected">Demande refusée</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Espacement pour le footer -->
+<br><br><br><br><br><br>
+
+<app-footer></app-footer>

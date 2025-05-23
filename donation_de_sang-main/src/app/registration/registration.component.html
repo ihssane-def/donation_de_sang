@@ -1,0 +1,98 @@
+<div class="container">
+  <h3 class="textual">Nouvel Utilisateur</h3>
+  <form #Registerform="ngForm" (ngSubmit)="registerUser()">
+    <small class="text-danger"><b>{{msg}}</b></small>
+      <div class="form-group">
+      <label for="email">Adresse e-mail : <b class="text-danger">*</b></label>
+      <input type="email" class="form-control" placeholder="entrez votre email" name="email" [(ngModel)]="user.email" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+      #email="ngModel"
+      [class.is-invalid]="email.invalid && email.touched"
+      >
+    <div *ngIf="email.errors && (email.invalid && email.touched)">
+      <small class="text-danger" *ngIf="email.errors.required"><b>Champ obligatoire</b></small>
+      <small class="text-danger" *ngIf="email.errors.pattern"><b>Email invalide</b></small>
+    </div>
+    <small style="color: gray; font-size: 10px;">Entrez une adresse email valide pour la vérification</small>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur : <b class="text-danger">*</b></label>
+      <input type="text" class="form-control" placeholder="entrez votre nom d'utilisateur" name="username" [(ngModel)]="user.username" required 
+      #username="ngModel"
+      [class.is-invalid]="username.invalid && username.touched">
+     <small class="text-danger" [class.d-none]="username.valid || username.untouched"><b>Champ obligatoire</b></small>
+    </div>
+     <small style="color: gray; font-size: 10px;">Entrez votre nom complet avec initiales pour la vérification</small>
+
+    <div class="form-group">
+      <label for="bloodgroup">Groupe sanguin : <b class="text-danger">*</b></label>
+      <input type="text" class="form-control" placeholder="entrez votre groupe sanguin" name="bloodgroup" [(ngModel)]="user.bloodgroup" required 
+      #bloodgroup="ngModel"
+      [class.is-invalid]="bloodgroup.invalid && bloodgroup.touched">
+     <small class="text-danger" [class.d-none]="bloodgroup.valid || bloodgroup.untouched"><b>Champ obligatoire</b></small>
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Genre : <b class="text-danger">*</b></label>
+      <select class="form-control" id="sel1" name="gender" [(ngModel)]="user.gender" required
+          #gender="ngModel">
+              <option selected>Homme</option>
+              <option>Femme</option>
+              <option>Autre</option>
+          </select>
+     <small class="text-danger" [class.d-none]="gender.valid || gender.untouched"><b>Champ obligatoire</b></small>
+    </div>
+
+    <div class="form-group">
+      <label for="age">Âge : <b class="text-danger">*</b></label>
+      <input type="number" class="form-control" placeholder="entrez votre âge" name="age" [(ngModel)]="user.age" required 
+      #age="ngModel"
+      [class.is-invalid]="age.invalid && age.touched">
+     <small class="text-danger" [class.d-none]="age.valid || age.untouched"><b>Champ obligatoire</b></small>
+    </div>
+
+    <div class="form-group">
+      <label for="mobile">Numéro de téléphone : <b class="text-danger">*</b></label>
+      <input type="tel" class="form-control" placeholder="entrez votre numéro de téléphone" name="mobile" [(ngModel)]="user.mobile" required pattern="[0-9]{10}"
+      #mobile="ngModel"
+      [class.is-invalid]="mobile.invalid && mobile.touched">
+     <small class="text-danger" [class.d-none]="mobile.valid || mobile.untouched"><b>Champ obligatoire</b></small>
+     <small class="text-danger" *ngIf="mobile.errors?.pattern"><b>Le numéro doit contenir 10 chiffres</b></small>
+    </div>
+     <small style="color: gray; font-size: 10px;">Entrez un numéro de téléphone valide à 10 chiffres pour la vérification</small>
+
+    <div class="form-group">
+      <label for="pwd">Mot de passe : <b class="text-danger">*</b></label>
+      <input type="password" class="form-control" placeholder="entrez votre mot de passe" name="pwd" [(ngModel)]="user.password" required 
+      #password="ngModel"
+      [class.is-invalid]="password.invalid && password.touched"
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$"
+      >
+      <div *ngIf="password.errors && password.invalid && password.touched">
+        <small class="text-danger" *ngIf="password.errors.required"><b>Champ obligatoire</b></small>
+        <small class="text-danger" *ngIf="password.errors.pattern"><b>Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial</b></small>
+      </div>
+      <small style="color: gray; font-size: 10px;">au moins une majuscule, un chiffre, une minuscule, un caractère spécial, longueur de 6-20</small>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPwd">Confirmer le mot de passe : <b class="text-danger">*</b></label>
+      <input type="password" class="form-control" placeholder="retapez votre mot de passe" name="confirmPassword" [(ngModel)]="confirmPassword" required 
+      #confirmPwd="ngModel"
+      [class.is-invalid]="confirmPwd.invalid && confirmPwd.touched"
+      >
+      <small class="text-danger" [class.d-none]="confirmPassword === user.password || confirmPwd.untouched"><b>les mots de passe ne correspondent pas</b></small>
+    </div>
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="acceptTerms" [(ngModel)]="acceptTerms" required #terms="ngModel">
+          <small style="color: gray;">J'accepte les conditions générales <b class="text-danger">*</b></small>
+        </label>
+        <small class="text-danger" [class.d-none]="terms.valid || terms.untouched"><b>Vous devez accepter les conditions générales</b></small>
+      </div>
+    </div>
+    <button [disabled]="Registerform.form.invalid || !acceptTerms || (confirmPassword !== user.password)" type="submit" class="btn registerbtn">S'inscrire</button>
+  </form>
+  <div class="sign-up" style="text-align: center; margin-top: 10px;">Vous avez déjà un compte ? <small [routerLink]="['/login']" style="color: navy; text-align: center; cursor: pointer;"><b>Connectez-vous ici</b></small></div>
+</div>

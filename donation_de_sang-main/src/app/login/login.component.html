@@ -1,0 +1,75 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="user-login-form">
+     <h2 class="textual">Connexion Utilisateur</h2>
+      <form #userloginform="ngForm" (ngSubmit)="loginUser()">
+        <small class="text-danger"><b>{{msg}}</b></small>
+          <div class="form-group">
+          <label for="email">Adresse e-mail : <b class="text-danger">*</b></label>
+          <input type="email" class="form-control" placeholder="entrez votre email" name="email" [(ngModel)]="user.email" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+          #email="ngModel"
+          [class.is-invalid]="email.invalid && email.touched"
+          >
+        <div *ngIf="email.errors && email.invalid && email.touched">
+          <small class="text-danger" *ngIf="email.errors.required"><b>Champ obligatoire</b></small>
+          <small class="text-danger" *ngIf="email.errors.pattern"><b>Email invalide</b></small>
+        </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="pwd" style="margin-top: 5px;">Mot de passe : <b class="text-danger">*</b></label>
+          <input type="password" class="form-control" placeholder="entrez votre mot de passe" name="pwd" [(ngModel)]="user.password" required 
+          #password="ngModel"
+          [class.is-invalid]="password.invalid && password.touched"
+          >
+          <div *ngIf="password.errors && password.invalid && password.touched">
+            <small class="text-danger" *ngIf="password.errors.required"><b>Champ obligatoire</b></small>
+          </div>
+          <small style="color: gray; font-size: 10px;">au moins une majuscule, un chiffre, une minuscule, un caractère spécial, longueur de 6-20</small>
+        </div>
+  
+        <div class="checkbox" style="margin-top: 5px;">
+          <small style="color: gray;"><input type="checkbox" name="remember"> Se souvenir de moi</small>
+          <small style="color: navy; margin-left: 42%; cursor: pointer;">Mot de passe oublié ?</small>
+        </div>
+        <button [disabled]="userloginform.form.invalid" type="submit" class="btn loginbtn">Se connecter</button>
+      </form>
+      <div class="sign-up" style=" text-align: center; margin-top: 10px;">Vous n'avez pas de compte ? <small [routerLink]="['/registration']" style="color: navy; text-align: center; cursor: pointer;"><b>Créez-en un</b></small></div>
+      <div class="sign-up" style=" text-align: center; margin-top: 10px;">Vous êtes administrateur ? <small class="userlogin" style="color: navy; text-align: center; cursor: pointer;"><b>cliquez ici</b></small></div>
+      </div>
+  
+      <div class="admin-login-form">
+      <h2 class="textual">Connexion Administrateur</h2>
+      <form #adminloginform="ngForm" (ngSubmit)="adminLogin()">
+        <small class="text-danger"><b>{{msg}}</b></small>
+          <div class="form-group">
+          <label for="email">Email administrateur : <b class="text-danger">*</b></label>
+          <input type="email" class="form-control" placeholder="entrez l'email admin" name="email" [(ngModel)]="adminEmail" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+          #adminemail="ngModel"
+          [class.is-invalid]="adminemail.invalid && adminemail.touched"
+          >
+        <div *ngIf="adminemail.errors && adminemail.invalid && adminemail.touched">
+          <small class="text-danger" *ngIf="adminemail.errors.required"><b>Champ obligatoire</b></small>
+          <small class="text-danger" *ngIf="adminemail.errors.pattern"><b>Email invalide</b></small>
+        </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="pwd" style="margin-top: 5px;">Mot de passe administrateur : <b class="text-danger">*</b></label>
+          <input type="password" class="form-control" placeholder="entrez le mot de passe admin" name="pwd" [(ngModel)]="adminPassword" required 
+          #adminpassword="ngModel"
+          [class.is-invalid]="adminpassword.invalid && adminpassword.touched"
+          >
+          <div *ngIf="adminpassword.errors && adminpassword.invalid && adminpassword.touched">
+            <small class="text-danger" *ngIf="adminpassword.errors.required"><b>Champ obligatoire</b></small>
+          </div>
+          <small style="color: gray; font-size: 10px;">Seul l'administrateur connaît son email et mot de passe corrects</small>
+        </div>
+  
+        <small style="color: navy; margin-left: 69%; cursor: pointer;">Mot de passe oublié ?</small>
+        <button [disabled]="adminloginform.form.invalid" type="submit" class="btn loginbtn">Se connecter</button>
+        <div class="sign-up" style=" text-align: center; margin-top: 10px;">Vous êtes utilisateur ? <small class="adminlogin" style="color: navy; text-align: center; cursor: pointer;"><b>cliquez ici</b></small></div>
+      </form>
+    </div>
+      </div>
+    </div>

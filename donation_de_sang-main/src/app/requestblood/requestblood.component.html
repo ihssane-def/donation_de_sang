@@ -1,0 +1,93 @@
+<div class="sidebar-logo">
+    <div class="welcometxt" style="float: left;"><b style="color: white;">Tableau de bord utilisateur</b></div>
+    <button class="logoutbtn" (click)="navigateHome()"><i class="fa fa-home"></i> Accueil</button>
+      <b class="sidebar-text" style="color: whitesmoke;"><i class="fa fa-user"></i> Bienvenue {{loggedUser}}</b>
+      <button class="logoutbtn" (click)="logout"><i class="fa fa-sign-out"></i> Déconnexion</button>
+  </div>
+
+  <div class="container" id="requestBlood">
+    <h3 class="textual"><i class="fa fa-plus" aria-hidden="true"></i> Demande de sang</h3>
+    <div style="text-align: center; color: green;"><b>{{msg}}</b></div>
+    <form #donateForm="ngForm" (ngSubmit)="requestBlood()">
+
+      <div class="form-group">
+        <label for="patientname">Nom du patient : <b class="text-danger">*</b></label>
+        <input type="text" class="form-control" placeholder="entrez le nom du patient" name="patientname" [(ngModel)]="request.name" required 
+        #patientname="ngModel"
+        [class.is-invalid]="patientname.invalid && patientname.touched">
+       <small class="text-danger" [class.d-none]="patientname.valid || patientname.untouched"><b>champ obligatoire</b></small>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Adresse email du patient : <b class="text-danger">*</b></label>
+      <input type="email" class="form-control" placeholder="entrez l'email" name="email" [(ngModel)]="request.email" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+      #email="ngModel"
+      [class.is-invalid]="email.invalid && email.touched"
+      >
+    <div *ngIf="email.errors && (email.invalid && email.touched)">
+      <small class="text-danger" *ngIf="email.errors.required"><b>champ obligatoire</b></small>
+      <small class="text-danger" *ngIf="email.errors.pattern"><b>Adresse email invalide</b></small>
+    </div>
+    <small style="color: gray; font-size: 10px;">Entrez une adresse email valide pour la vérification</small>
+    </div>
+  
+    <div class="form-group">
+      <label for="bloodgroup">Groupe sanguin du patient : <b class="text-danger">*</b></label>
+      <input type="text" class="form-control" placeholder="entrez le groupe sanguin" name="bloodgroup" [(ngModel)]="request.bloodgroup" required 
+      #bloodgroup="ngModel"
+      [class.is-invalid]="bloodgroup.invalid && bloodgroup.touched">
+     <small class="text-danger" [class.d-none]="bloodgroup.valid || bloodgroup.untouched"><b>champ obligatoire</b></small>
+  </div>
+  
+  <div class="form-group">
+    <label for="units">Unités requises : <b class="text-danger">*</b></label>
+    <select class="form-control" placeholder="1" id="sel1" name="units" [(ngModel)]="request.units"
+    #units="ngModel">
+        <option selected>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+    </select>
+   <small class="text-danger" [class.d-none]="units.valid || units.untouched"><b>champ obligatoire</b></small>
+  </div>
+  
+  <div class="form-group">
+    <label for="disease">Maladie du patient : <b class="text-danger">*</b></label>
+    <input type="text" class="form-control" placeholder="entrez le nom de la maladie" name="disease" [(ngModel)]="request.disease" required 
+    #disease="ngModel"
+    [class.is-invalid]="disease.invalid && disease.touched">
+   <small class="text-danger" [class.d-none]="disease.valid || disease.untouched"><b>champ obligatoire</b></small>
+  </div>
+  
+  <div class="form-group">
+    <label for="mobile">Numéro de téléphone du patient : <b class="text-danger">*</b></label>
+    <input type="tel" class="form-control" placeholder="entrez le numéro de téléphone" name="mobile" [(ngModel)]="request.mobile" required 
+    #mobile="ngModel"
+    [class.is-invalid]="mobile.invalid && mobile.touched">
+   <small class="text-danger" [class.d-none]="mobile.valid || mobile.untouched"><b>champ obligatoire</b></small>
+  </div>
+  <small style="color: gray; font-size: 10px;">Veuillez entrer un numéro de téléphone valide à 10 chiffres</small>
+  
+  <div class="form-group">
+    <label for="gender">Genre du patient : <b class="text-danger">*</b></label>
+    <select class="form-control" id="sel1" name="gender" [(ngModel)]="request.gender"
+    #gender="ngModel">
+        <option selected>Homme</option>
+        <option>Femme</option>
+        <option>Autre</option>
+    </select>
+  </div>
+  
+          <div class="form-group">
+              <label for="age">Âge du patient : <b class="text-danger">*</b></label>
+              <input type="number" class="form-control" placeholder="entrez l'âge du patient" name="age" [(ngModel)]="request.age" required 
+              #age="ngModel"
+              [class.is-invalid]="age.invalid && age.touched">
+             <small class="text-danger" [class.d-none]="age.valid || age.untouched"><b>champ obligatoire</b></small>
+          </div>
+  
+      <button [disabled]="donateForm.form.invalid" type="submit" class="btn registerbtn">Envoyer la demande</button>
+    </form>
+  </div>
+  
+  <app-footer></app-footer>

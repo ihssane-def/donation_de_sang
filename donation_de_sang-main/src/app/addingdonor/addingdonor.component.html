@@ -1,0 +1,96 @@
+<button class="logoutbtn" (click)="navigateHome()"><i class="fa fa-home"></i> Accueil</button>
+
+<div class="container">
+    <h2 class="textual"><i style="color: red;" class="fa fa-heart"></i> Ajouter un nouveau donneur </h2>
+    <form #addDonorform="ngForm" (ngSubmit)="addDonor()">
+        
+        <div class="form-group">
+            <label for="donorname">Nom du donneur : <b class="text-danger">*</b></label>
+            <input type="text" class="form-control" placeholder="entrez le nom du donneur" name="donorname" [(ngModel)]="donor.name" required 
+            #donorname="ngModel"
+            [class.is-invalid]="donorname.invalid && donorname.touched">
+           <small class="text-danger" [class.d-none]="donorname.valid || donorname.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: gray; font-size: 10px;">Veuillez entrer le nom complet du donneur avec ses initiales</small>
+
+        <div class="form-group">
+            <label for="bloodgroup">Groupe sanguin du donneur : <b class="text-danger">*</b></label>
+            <input type="text" class="form-control" placeholder="entrez le groupe sanguin" name="bloodgroup" [(ngModel)]="donor.bloodGroup" required 
+            #bloodgroup="ngModel"
+            [class.is-invalid]="bloodgroup.invalid && bloodgroup.touched">
+           <small class="text-danger" [class.d-none]="bloodgroup.valid || bloodgroup.untouched"><b>champ obligatoire</b></small>
+        </div>
+
+        <div class="form-group">
+            <label for="units">Unités de sang : <b class="text-danger">*</b></label>
+            <select class="form-control" placeholder="1" id="sel1" name="units" [(ngModel)]="donor.units"
+            #units="ngModel">
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+           <small class="text-danger" [class.d-none]="units.valid || units.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: rgb(179, 11, 11); font-size: 10px; font-weight: bold;">Le maximum d'unités pouvant être données est de 3 pintes</small>
+
+        <div class="form-group">
+            <label for="mobile">Numéro de téléphone du donneur : <b class="text-danger">*</b></label>
+            <input type="tel" class="form-control" placeholder="entrez le numéro de téléphone" name="mobile" [(ngModel)]="donor.mobile" required 
+            #mobile="ngModel"
+            [class.is-invalid]="mobile.invalid && mobile.touched">
+           <small class="text-danger" [class.d-none]="mobile.valid || mobile.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: gray; font-size: 10px;">Veuillez entrer un numéro de téléphone valide à 10 chiffres</small>
+
+        <div class="form-group">
+            <label for="gender">Genre du donneur : <b class="text-danger">*</b></label>
+            <select class="form-control" id="sel1" name="gender" [(ngModel)]="donor.gender"
+            #gender="ngModel">
+                <option selected>Homme</option>
+                <option>Femme</option>
+                <option>Autre</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Âge du donneur : <b class="text-danger">*</b></label>
+            <input type="number" min="0" max="65" class="form-control" placeholder="entrez l'âge du donneur" name="age" [(ngModel)]="donor.age" required 
+            #age="ngModel"
+            [class.is-invalid]="age.invalid && age.touched">
+           <small class="text-danger" [class.d-none]="age.valid || age.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: rgb(179, 11, 11); font-size: 10px; font-weight: bold;">L'âge maximum des donneurs est de 65 ans</small>
+
+        <div class="form-group">
+            <label for="city">Localisation du donneur : <b class="text-danger">*</b></label>
+            <input type="text" class="form-control" placeholder="entrez la ville" name="city" [(ngModel)]="donor.city" required 
+            #city="ngModel"
+            [class.is-invalid]="city.invalid && city.touched">
+           <small class="text-danger" [class.d-none]="city.valid || city.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: gray; font-size: 10px;">Veuillez indiquer le nom correct de la ville (ex : Paris)</small>
+
+        <div class="form-group">
+            <label for="address">Adresse du donneur : <b class="text-danger">*</b></label>
+            <input type="text" class="form-control" placeholder="entrez l'adresse du donneur" name="address" [(ngModel)]="donor.address" required 
+            #address="ngModel"
+            [class.is-invalid]="address.invalid && address.touched">
+           <small class="text-danger" [class.d-none]="address.valid || address.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: gray; font-size: 10px;">Veuillez indiquer l'adresse exacte du donneur pour référence</small>
+
+        <div class="form-group">
+            <label for="date">Date du don : <b class="text-danger">*</b></label>
+            <input type="date" class="form-control" placeholder="entrez la date du don" id="date" name="date" [(ngModel)]="donor.date" required 
+            #date="ngModel"
+            [class.is-invalid]="date.invalid && date.touched">
+           <small class="text-danger" [class.d-none]="date.valid || date.untouched"><b>champ obligatoire</b></small>
+        </div>
+        <small style="color: gray; font-size: 10px;">Par défaut, la date du jour sera sélectionnée</small>
+        
+       <div class="checkbox" style="margin-top: 5px;">
+        <small style="color: gray;"><input type="checkbox" name="remember" required> Est-il/elle intéressé(e) pour donner son sang </small><small style="color:rgb(179, 11, 11); font-weight: bold;"> (ajouter des donneurs sans leur consentement est punissable !)</small>
+      </div>
+      <button style="margin-top: 15px;" [disabled]="addDonorform.form.invalid" type="submit" class="btn registerbtn">Ajouter le donneur</button>
+    </form>
+  </div>
