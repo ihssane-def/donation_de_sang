@@ -15,5 +15,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run simple script
-        run: echo "Le workflow fonctionne !"
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test
